@@ -80,7 +80,7 @@ int list_ins_next(List *list, ListElmt *element, const void *data)
 
 // list_rem_next
 
-int list_rem_next(List *list, ListELmt *element, void **data)
+int list_rem_next(List *list, ListElmt *element, void **data)
 {
 	ListElmt *old_element;
 
