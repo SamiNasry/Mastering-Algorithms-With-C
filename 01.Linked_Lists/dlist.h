@@ -8,7 +8,7 @@
 typedef struct DListElmt_ {
 	void *data;
 	struct DListElmt_ *prev;
-	struct DListELmt_ *next;
+	struct DListElmt_ *next;
 
 } DListElmt;
 
