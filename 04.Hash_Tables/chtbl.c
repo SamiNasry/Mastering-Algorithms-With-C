@@ -10,7 +10,7 @@ int chtbl_init(CHTbl *htbl, int buckets, int (*h)(const void *key), int (*match)
 	int i;
 	//Allocate space for the hash table 
 	if ((htbl->table = (List *)malloc(buckets * sizeof(List))) == NULL)
-		return -1;
+	return -1;
 	//Initialize the buckets.
 	htbl->buckets = buckets;
 	for(i = 0; i < htbl->buckets; i++)
