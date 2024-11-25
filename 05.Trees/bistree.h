@@ -5,9 +5,9 @@
 
 // Define balance factors for AVL trees.
 
-#define AVL_LEFT_HEAVY 1
+#define AVL_LFT_HEAVY 1
 #define AVL_BALANCED 0
-#define AVL_RIGHT_HEAVY -1
+#define AVL_RGT_HEAVY -1
 
 // Define a structure for nodes in AVL trees.
 
