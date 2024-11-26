@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "bistree.h"
+#include "bitree.h"
 static void destroy_right(BisTree *tree, BiTreeNode *node);
 
 //rotate_left
@@ -30,7 +31,7 @@ static void rotate_left(BiTreeNode **node)
 		bitree_left(*node) = bitree_right(grandchild);
 		bitree_right(grandchild) = *node;
 
-		switch ((AvlNode *)bitree_data(grandchild))->factor) {
+		switch (((AvlNode *)bitree_data(grandchild))->factor) {
 			case AVL_LFT_HEAVY:
 				((AvlNode *)bitree_data(*node))->factor = AVL_RGT_HEAVY;
 				((AvlNode *)bitree_data(left))->factor = AVL_BALANCED;
@@ -187,6 +188,57 @@ static int insert(BisTree *tree, BiTreeNode **node, const void *data, int *balan
 		retval;
 
 	// Insert the data into the tree. 
+	if (bitree_is_eob(*node)) {
+		// Handle insertion into an empty tree.
+
+		if ((avl_data = (AvlNode *)malloc(sizeof(AvlNode))) == NULL)
+			return -1;
+
+		avl_data->factor = AVL_BALANCED;
+		avl_data->hidden = 0;
+		avl_data->data = (void *)data;
+
+		return bitree_ins_left(tree, *node, avl_data);
+	}
+
+	else {
+		// Handle insertion into a tree that is not empty 
+		cmpval = tree->compare(data, ((AvlNode *)bitree_data(*node))->data);
+
+		if (cmpval < 0) {
+			// Move to the left.
+
+			if (bitree_is_eob(bitree_left(*node))) {
+				if ((avl_data = (AvlNode *)malloc(sizeof(AvlNode))) == NULL)
+					return -1;
+				avl_data->factor = AVL_BALANCED;
+				avl_data->hidden = 0;
+				avl_data->data = (void *)data;
+
+				if (bitree_ins_left(tree, *node, avl_data) != 0)
+					return -1;
+				*balanced = 0;
+			}
+			else {
+				if ((retval = insert(tree,&bitree_left(*node), data, balanced)) != 0)
+				{
+					return retval;
+				}
+
+			}
+
+			// Ensure that the tree remains balanced.
+
+			if (!(*balanced)) {
+				switch ((AvlNode *)bitree_data(*node))->factor) {
+					case AVL_LFT_HEAVY:
+						// Stop here
+				}
+			}
+			
+
+		}
+	}
 	
 }
 
